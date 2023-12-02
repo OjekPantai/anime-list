@@ -7,25 +7,25 @@ import { useRef } from "react";
 const InputSearch = () => {
   const searchRef = useRef();
   const router = useRouter();
-  // Function for searching when the Search icon is clicked
+
   const handleSearch = (event) => {
-    event.preventDefault();
     const keyword = searchRef.current.value;
-    router.push(`/search/${keyword}`);
-  };
-  // Function for searching when the Enter key is pressed
-  const handleKeyDown = (event) => {
-    if (event.key === "Enter") {
-      handleSearch(event);
+
+    if (!keyword || keyword.length <= 2) return;
+
+    if (event.key === "Enter" || event.type === "click") {
+      event.preventDefault();
+      router.push(`/search/${keyword}`);
     }
   };
+
   return (
     <div className="relative">
       <input
         placeholder="Search..."
-        className="w-full p-2 rounded"
+        className="w-full p-2 rounded bg-color-darkSoft"
         ref={searchRef}
-        onKeyDown={handleKeyDown}
+        onKeyDown={handleSearch}
       />
       <button className="absolute top-2 end-2" onClick={handleSearch}>
         <MagnifyingGlass size={24} />
